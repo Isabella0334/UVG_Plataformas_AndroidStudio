@@ -29,9 +29,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyApp() {
     val items = listOf(
-        Item("Primer texto"),
-        Item("Segundo texto"),
-        Item("Tercer texto")
+        Item("Item 1"),
+        Item("Item 2"),
+        Item("Item 3")
     )
     var selectedItem by remember { mutableStateOf<Item?>(null) }
 
@@ -41,9 +41,9 @@ fun MyApp() {
                 selectedItem = item
             }
         } else {
-            Text("Selección: ${selectedItem?.name}")
+            Text("Selected: ${selectedItem?.name}")
             Button(onClick = { selectedItem = null }) {
-                Text("Regresar")
+                Text("Go Back")
             }
         }
     }
