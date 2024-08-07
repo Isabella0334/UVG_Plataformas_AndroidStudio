@@ -7,10 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -32,17 +29,37 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyApp() {
     val items = listOf(
-        Item("Item 1"),
-        Item("Item 2"),
-        Item("Item 3")
+        Item("Primer texto"),
+        Item("Segundo texto"),
+        Item("Tercer texto")
     )
-    var selectedItem = remember { mutableStateOf<Item?>(null) }
+    var selectedItem by remember { mutableStateOf<Item?>(null) }
 
     Column(modifier = Modifier.padding(16.dp)) {
-        if (selectedItem.value == null) {
-            Text("Select an item from the list")
+        if (selectedItem == null) {
+            ItemList(items) { item ->
+                selectedItem = item
+            }
         } else {
-            Text("Selected: ${selectedItem.value?.name}")
+            Text("Selección: ${selectedItem?.name}")
+            Button(onClick = { selectedItem = null }) {
+                Text("Regresar")
+            }
+        }
+    }
+}
+
+@Composable
+fun ItemList(items: List<Item>, onItemClick: (Item) -> Unit) {
+    LazyColumn {
+        items(items) { item ->
+            Text(
+                text = item.name,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .clickable { onItemClick(item) }
+            )
         }
     }
 }
